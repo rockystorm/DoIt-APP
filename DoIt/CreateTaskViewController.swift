@@ -24,14 +24,19 @@ class CreateTaskViewController: UIViewController {
     
     @IBAction func addTapped(_ sender: AnyObject) {
         
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        
         // create a task from the outlet information
         
-        let task = Task()
+        let task = Task(context: context)
+        
         task.name = createTaskNameField.text!
         task.important = importantSwitch.isOn
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
         
-        previousVC.tasks.append(task)
-        previousVC.tableView.reloadData()
+        
+        // Pop Back
+        
         navigationController!.popViewController(animated: true)
         
     }
